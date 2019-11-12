@@ -1,0 +1,16 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Builder;
+
+class DummyClass extends Builder
+{
+    // Your code here
+    /*
+    public function whereActive(): self
+    {
+        return $this->whereStatus(true);
+    }
+    */
+}

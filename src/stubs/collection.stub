@@ -1,0 +1,22 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Collection;
+
+class DummyClass extends Collection
+{
+    /**
+    * Calculate paid invoices
+    * @Example
+    * Invoice::where(...)->calculate()->map(...)
+    */
+    /*
+    public function calculate(): self
+    {
+        return $this->filter(function (Invoice $invoice) {
+            return $invoice->isPaid();
+        });
+    }
+    */
+}

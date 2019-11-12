@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+use Spatie\DataTransferObject\DataTransferObject;
+
+class DummyClass extends DataTransferObject
+{
+    /** @var string */
+    public $someFieldName;
+}
