@@ -17,6 +17,7 @@ class DomainMakeCommand extends Command
      */
     protected $signature = 'right-way:make:domain 
                             {name : Domain name}
+                            {--root : Domain path}
                             ';
 
     /**
@@ -50,7 +51,15 @@ class DomainMakeCommand extends Command
     {
         $name = $this->argument('name');
 
+        $root = $this->option('root');
+
+        if ($root) {
+            $this->domainPath = $root;
+        }
+
         $this->createStructure($name);
+
+        $this->info("Domain {$name} created");
     }
 
     /**
@@ -60,6 +69,28 @@ class DomainMakeCommand extends Command
     {
         $path = $this->getPath($name);
         $this->makeDirectory($path);
+
+        $structure = [
+            'Actions',
+            'Broadcasting',
+            'Collections',
+            'DataTransferObjects',
+            'Factories',
+            'Events',
+            'Exceptions',
+            'Jobs',
+            'Listeners',
+            'Mail',
+            'Models',
+            'Notifications',
+            'Policies',
+            'QueryBuilders',
+            'Rules'
+        ];
+
+        foreach ($structure as $folder) {
+            $this->makeDirectory($path . '/' . $folder);
+        }
     }
 
     /**
@@ -77,7 +108,7 @@ class DomainMakeCommand extends Command
      */
     protected function makeDirectory($path)
     {
-        if (! $this->files->isDirectory(dirname($path))) {
+        if (! $this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
         }
 
