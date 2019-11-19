@@ -9,7 +9,6 @@ class DomainMakeCommand extends Command
 {
     protected $files;
 
-
     /**
      * The name and signature of the console command.
      *
@@ -32,7 +31,8 @@ class DomainMakeCommand extends Command
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param \Illuminate\Filesystem\Filesystem $files
+     *
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -86,30 +86,32 @@ class DomainMakeCommand extends Command
             'Operations',
             'Policies',
             'QueryBuilders',
-            'Rules'
+            'Rules',
         ];
 
         foreach ($structure as $folder) {
-            $this->makeDirectory($path . '/' . $folder);
+            $this->makeDirectory($path.'/'.$folder);
         }
     }
 
     /**
      * @param $name
+     *
      * @return string
      */
     protected function getPath($name)
     {
-        return $this->laravel['path'] . '/' . $this->domainPath . '/' . $name;
+        return $this->laravel['path'].'/'.$this->domainPath.'/'.$name;
     }
 
     /**
      * @param $path
+     *
      * @return mixed
      */
     protected function makeDirectory($path)
     {
-        if (! $this->files->isDirectory($path)) {
+        if (!$this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
         }
 

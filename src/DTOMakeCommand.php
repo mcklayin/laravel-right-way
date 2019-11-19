@@ -3,7 +3,6 @@
 namespace Mcklayin\RightWay;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class DTOMakeCommand extends GeneratorCommand
@@ -32,7 +31,7 @@ class DTOMakeCommand extends GeneratorCommand
     protected function getOptions(): array
     {
         return [
-            ['request', null, InputOption::VALUE_NONE, 'Indicates that data transfer object should has from request method']
+            ['request', null, InputOption::VALUE_NONE, 'Indicates that data transfer object should has from request method'],
         ];
     }
 }

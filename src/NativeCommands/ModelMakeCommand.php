@@ -38,7 +38,7 @@ class ModelMakeCommand extends AbstractGeneratorCommand
      */
     public function handle()
     {
-        if (parent::handle() === false && ! $this->option('force')) {
+        if (parent::handle() === false && !$this->option('force')) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class ModelMakeCommand extends AbstractGeneratorCommand
         $factory = Str::studly(class_basename($this->argument('name')));
 
         $this->call('make:factory', [
-            'name' => "{$factory}Factory",
+            'name'    => "{$factory}Factory",
             '--model' => $this->qualifyClass($this->getNameInput()),
         ]);
     }
@@ -91,7 +91,7 @@ class ModelMakeCommand extends AbstractGeneratorCommand
         }
 
         $this->call('make:migration', [
-            'name' => "create_{$table}_table",
+            'name'     => "create_{$table}_table",
             '--create' => $table,
         ]);
     }
@@ -108,7 +108,7 @@ class ModelMakeCommand extends AbstractGeneratorCommand
         $modelName = $this->qualifyClass($this->getNameInput());
 
         $this->call('make:controller', [
-            'name' => "{$controller}Controller",
+            'name'    => "{$controller}Controller",
             '--model' => $this->option('resource') ? $modelName : null,
         ]);
     }

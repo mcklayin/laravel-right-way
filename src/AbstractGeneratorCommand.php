@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 
 abstract class AbstractGeneratorCommand extends GeneratorCommand
 {
-
     /**
      * @var string
      */
@@ -17,7 +16,7 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\' . $this->domainPath;
+        return $rootNamespace.'\\'.$this->domainPath;
     }
 
     private function afterLast($subject, $search)
@@ -28,7 +27,8 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function qualifyClass($name)
@@ -43,11 +43,10 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
 
         $name = str_replace('/', '\\', $name);
 
-
         $actionNamePart = $this->afterLast($name, '\\');
-        $name = Str::replaceFirst($actionNamePart, $this->path . '\\' . $actionNamePart, $name);
+        $name = Str::replaceFirst($actionNamePart, $this->path.'\\'.$actionNamePart, $name);
         $path = $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
 
         return $path;
