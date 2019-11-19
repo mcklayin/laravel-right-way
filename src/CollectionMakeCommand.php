@@ -2,7 +2,6 @@
 
 namespace Mcklayin\RightWay;
 
-
 class CollectionMakeCommand extends AbstractGeneratorCommand
 {
     protected $name = 'right-way:make:collection';

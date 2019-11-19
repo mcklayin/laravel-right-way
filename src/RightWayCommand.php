@@ -31,8 +31,9 @@ class RightWayCommand extends Command
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Illuminate\Support\Composer    $composer
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @param \Illuminate\Support\Composer      $composer
+     *
      * @return void
      */
     public function __construct(Filesystem $files, Composer $composer)
@@ -60,15 +61,15 @@ class RightWayCommand extends Command
     }
 
     /**
-     * Create Domain layer & first User domain
+     * Create Domain layer & first User domain.
      */
     private function createDomainLayer()
     {
         $domainLayerName = 'Domain';
-        $domainNamespace = $this->appRootNamespace . '\\' . $domainLayerName;
+        $domainNamespace = $this->appRootNamespace.'\\'.$domainLayerName;
         $this->call('right-way:make:domain', [
-            'name' => 'User',
-            '--root' => $domainLayerName
+            'name'   => 'User',
+            '--root' => $domainLayerName,
         ]);
 
         $this->prepareDefaultDomain(app_path($domainLayerName), $domainNamespace);
@@ -77,7 +78,7 @@ class RightWayCommand extends Command
     }
 
     /**
-     * Create Application layer
+     * Create Application layer.
      */
     private function createApplicationLayer()
     {
@@ -87,11 +88,11 @@ class RightWayCommand extends Command
         // Move Framework directories to new location
         $applicationLayerFolders = [
             'Console',
-            'Http'
+            'Http',
         ];
 
         foreach ($applicationLayerFolders as $folder) {
-            $destPath = app_path($applicationLayerName . '/' . $folder);
+            $destPath = app_path($applicationLayerName.'/'.$folder);
             $this->moveDirectory(app_path($folder), $destPath);
         }
 
@@ -99,7 +100,7 @@ class RightWayCommand extends Command
     }
 
     /**
-     * Create Service layer
+     * Create Service layer.
      */
     private function createServiceLayer()
     {
@@ -111,11 +112,12 @@ class RightWayCommand extends Command
 
     /**
      * @param $path
+     *
      * @return mixed
      */
     protected function makeDirectory($path)
     {
-        if (! $this->files->isDirectory($path)) {
+        if (!$this->files->isDirectory($path)) {
             $this->files->makeDirectory($path, 0777, true, true);
         }
 
@@ -143,13 +145,14 @@ class RightWayCommand extends Command
      */
     protected function moveFile($srcPath, $destPath)
     {
-        if (! $this->files->isDirectory($srcPath)) {
+        if (!$this->files->isDirectory($srcPath)) {
             $this->files->move($srcPath, $destPath);
         }
     }
 
     /**
      * @param $path
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function prepareDefaultDomain($path, $domainNamespace)
@@ -160,22 +163,23 @@ class RightWayCommand extends Command
     /**
      * @param string $path
      * @param string $domainNamespace
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function prepareDefaultModels($path, $domainNamespace)
     {
         $defaultsModels = [
-            'User' => 'User/Models'
+            'User' => 'User/Models',
         ];
 
         foreach ($defaultsModels as $model => $modelPath) {
-            $srcPath = app_path($model . '.php');
+            $srcPath = app_path($model.'.php');
 
             if ($this->files->exists($srcPath)) {
-                $destPath = $path . '/' . $modelPath . '/' . $model . '.php';
-                $namespace = $domainNamespace . '\\' . $this->buildNamespace($modelPath);
-                $this->buildClass(app_path($model . '.php'), $this->appRootNamespace, $namespace);
-                $this->moveFile(app_path($model . '.php'), $destPath);
+                $destPath = $path.'/'.$modelPath.'/'.$model.'.php';
+                $namespace = $domainNamespace.'\\'.$this->buildNamespace($modelPath);
+                $this->buildClass(app_path($model.'.php'), $this->appRootNamespace, $namespace);
+                $this->moveFile(app_path($model.'.php'), $destPath);
             }
         }
     }
@@ -184,6 +188,7 @@ class RightWayCommand extends Command
      * @param $path
      * @param $fromNamespace
      * @param $toNamespace
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($path, $fromNamespace, $toNamespace)
@@ -196,6 +201,7 @@ class RightWayCommand extends Command
      * @param $data
      * @param $fromNamespace
      * @param $toNamespace
+     *
      * @return mixed
      */
     protected function replaceNamespace(&$data, $fromNamespace, $toNamespace)
@@ -205,6 +211,7 @@ class RightWayCommand extends Command
 
     /**
      * @param $path
+     *
      * @return mixed
      */
     protected function buildNamespace($path)

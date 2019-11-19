@@ -2,7 +2,6 @@
 
 namespace Mcklayin\RightWay;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Mcklayin\RightWay\NativeCommands\ModelMakeCommand;
 

@@ -30,7 +30,7 @@ class ActionMakeCommand extends AbstractGeneratorCommand
     protected function getOptions(): array
     {
         return [
-            ['sync', null, InputOption::VALUE_NONE, 'Indicates that action should be synchronous']
+            ['sync', null, InputOption::VALUE_NONE, 'Indicates that action should be synchronous'],
         ];
     }
 }
