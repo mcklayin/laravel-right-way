@@ -24,13 +24,14 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
      */
     protected function getNameInput(): string
     {
-       $name = trim($this->argument('name'));
+        $name = trim($this->argument('name'));
 
-       return $name;
+        return $name;
     }
 
     /**
      * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
@@ -41,9 +42,10 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
     /**
      * Returns the portion of string specified by the start and length parameters.
      *
-     * @param  string  $string
-     * @param  int  $start
-     * @param  int|null  $length
+     * @param string   $string
+     * @param int      $start
+     * @param int|null $length
+     *
      * @return string
      */
     public function substr($string, $start, $length = null): string
@@ -54,8 +56,9 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
     /**
      * Get the portion of a string before the last occurrence of a given value.
      *
-     * @param  string  $subject
-     * @param  string  $search
+     * @param string $subject
+     * @param string $search
+     *
      * @return string
      */
     public function beforeLast($subject, $search): string
@@ -83,6 +86,7 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
 
     /**
      * @param string $name
+     *
      * @return string
      */
     protected function qualifyName($name): string
@@ -114,15 +118,15 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
             $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
 
-
         return $path;
     }
 
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return $this
      */
     protected function replaceNamespace(&$stub, $name)
@@ -146,6 +150,7 @@ abstract class AbstractDomainGeneratorCommand extends GeneratorCommand
 
     /**
      * @param $name
+     *
      * @return array
      */
     protected function getReplacers($name): array
