@@ -3,10 +3,10 @@
 namespace Mcklayin\RightWay\NativeCommands;
 
 use Illuminate\Support\Str;
-use Mcklayin\RightWay\AbstractGeneratorCommand;
+use Mcklayin\RightWay\AbstractDomainGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class ModelMakeCommand extends AbstractGeneratorCommand
+class ModelMakeCommand extends AbstractDomainGeneratorCommand
 {
     /**
      * The console command name.
@@ -34,7 +34,8 @@ class ModelMakeCommand extends AbstractGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
@@ -59,6 +60,11 @@ class ModelMakeCommand extends AbstractGeneratorCommand
 
         if ($this->option('controller') || $this->option('resource')) {
             $this->createController();
+        }
+
+        if (! $this->option('only-model')) {
+            $this->createQueryBuilder();
+            $this->createCollection();
         }
     }
 
@@ -114,6 +120,35 @@ class ModelMakeCommand extends AbstractGeneratorCommand
     }
 
     /**
+     * Create a query builder for the model.
+     *
+     * @return void
+     */
+    protected function createQueryBuilder()
+    {
+        $queryBuilder = Str::studly($this->argument('name'));
+
+        $this->call('right-way:make:query-builder', [
+            'name'    => "{$queryBuilder}QueryBuilder",
+        ]);
+    }
+
+    /**
+     * Create a collection for the model.
+     *
+     * @return void
+     */
+    protected function createCollection()
+    {
+        $collection = Str::studly($this->argument('name'));
+
+        $this->call('right-way:make:collection', [
+            'name'    => "{$collection}Collection",
+        ]);
+    }
+
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
@@ -148,6 +183,96 @@ class ModelMakeCommand extends AbstractGeneratorCommand
             ['pivot', 'p', InputOption::VALUE_NONE, 'Indicates if the generated model should be a custom intermediate table model'],
 
             ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated controller should be a resource controller'],
+
+            ['only-model', 'o', InputOption::VALUE_NONE, 'Generate a query builder and collection for the model'],
+        ];
+    }
+
+    /**
+     * Resolve create query builder name
+     *
+     * @return string
+     */
+    protected function queryBuilderName(): string
+    {
+        $queryBuilder = Str::studly($this->getBaseName());
+
+        return "{$queryBuilder}QueryBuilder";
+    }
+
+    /**
+     * Resolve created query builder namespace
+     *
+     * @return string
+     */
+    protected function queryBuilderNamespace(): string
+    {
+        $queryBuilderNamespace = $this->qualifyClass($this->getNameInput());
+        $replace = $this->beforeLast($queryBuilderNamespace,'\\'.$this->path);
+
+        return $replace . '\QueryBuilders\\'.$this->queryBuilderName();
+    }
+
+
+    /**
+     * Resolve created collection name
+     *
+     * @return string
+     */
+    protected function collectionName(): string
+    {
+        $collection = Str::studly($this->getBaseName());
+
+        return "{$collection}Collection";
+    }
+
+    /**
+     * Resolve created collection namespace
+     *
+     * @return string
+     */
+    protected function collectionNamespace(): string
+    {
+        $collectionNamespace = $this->qualifyClass($this->getNameInput());
+        $replace = $this->beforeLast($collectionNamespace,'\\'.$this->path);
+
+        return $replace . '\Collections\\'.$this->collectionName();
+    }
+
+    /**
+     * Get replacing placeholders
+     *
+     * @return array
+     */
+    protected function getReplacePlaceholders(): array
+    {
+        return [
+            'DummyNamespace',
+            'DummyRootNamespace',
+            'NamespacedDummyUserModel',
+            'DummyQueryBuilderNamespace',
+            'DummyQueryBuilder',
+            'DummyCollectionNamespace',
+            'DummyCollection'
+            ];
+    }
+
+    /**
+     * Get replaced data
+     *
+     * @param $name
+     * @return array
+     */
+    protected function getReplacers($name): array
+    {
+        return [
+            $this->getNamespace($name),
+            $this->rootNamespace(),
+            $this->userProviderModel(),
+            $this->queryBuilderNamespace(),
+            $this->queryBuilderName(),
+            $this->collectionNamespace(),
+            $this->collectionName(),
         ];
     }
 }

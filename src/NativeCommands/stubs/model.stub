@@ -3,8 +3,33 @@
 namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
+use DummyQueryBuilderNamespace;
+use DummyCollectionNamespace;
 
 class DummyClass extends Model
 {
-    //
+
+    /**
+    * Override default model collection by custom, for better logic code decouple
+    *
+    * @param array $models
+    *
+    * @return \DummyCollectionNamespace|static
+    */
+    public function newCollection(array $models = []): DummyCollection
+    {
+        return new DummyCollection($models);
+    }
+
+    /**
+    * Override default mode query builder by custom, for better logic code decouple
+    *
+    * @param  \Illuminate\Database\Query\Builder  $query
+    *
+    * @return \DummyQueryBuilderNamespace|static
+    */
+    public function newEloquentBuilder($query): DummyQueryBuilder
+    {
+        return new DummyQueryBuilder($query);
+    }
 }

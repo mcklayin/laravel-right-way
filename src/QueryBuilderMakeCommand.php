@@ -2,7 +2,7 @@
 
 namespace Mcklayin\RightWay;
 
-class QueryBuilderMakeCommand extends AbstractGeneratorCommand
+class QueryBuilderMakeCommand extends AbstractDomainGeneratorCommand
 {
     protected $name = 'right-way:make:query-builder';
 

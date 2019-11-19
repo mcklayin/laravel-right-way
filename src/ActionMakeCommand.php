@@ -4,7 +4,7 @@ namespace Mcklayin\RightWay;
 
 use Symfony\Component\Console\Input\InputOption;
 
-class ActionMakeCommand extends AbstractGeneratorCommand
+class ActionMakeCommand extends AbstractDomainGeneratorCommand
 {
     protected $name = 'right-way:make:action';
 
