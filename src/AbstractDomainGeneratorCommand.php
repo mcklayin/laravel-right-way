@@ -10,7 +10,8 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param \Illuminate\Filesystem\Filesystem $files
+     *
      * @return void
      */
     public function __construct(Filesystem $files)

@@ -10,7 +10,8 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param \Illuminate\Filesystem\Filesystem $files
+     *
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -23,9 +24,10 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     /**
      * Returns the portion of string specified by the start and length parameters.
      *
-     * @param  string  $string
-     * @param  int  $start
-     * @param  int|null  $length
+     * @param string   $string
+     * @param int      $start
+     * @param int|null $length
+     *
      * @return string
      */
     public function substr($string, $start, $length = null): string
@@ -36,8 +38,9 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     /**
      * Get the portion of a string before the last occurrence of a given value.
      *
-     * @param  string  $subject
-     * @param  string  $search
+     * @param string $subject
+     * @param string $search
+     *
      * @return string
      */
     public function beforeLast($subject, $search): string
@@ -65,6 +68,7 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
 
     /**
      * @param string $name
+     *
      * @return string
      */
     protected function qualifyName($name): string
@@ -75,7 +79,8 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
@@ -107,15 +112,15 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
             $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
 
-
         return $path;
     }
 
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return $this
      */
     protected function replaceNamespace(&$stub, $name)
@@ -139,6 +144,7 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
 
     /**
      * @param $name
+     *
      * @return array
      */
     protected function getReplacers($name): array

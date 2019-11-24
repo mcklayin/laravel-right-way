@@ -73,7 +73,7 @@ class ApplicationMakeCommand extends Command
         $structure = [
             'Controllers',
             'Middleware',
-            'Requests'
+            'Requests',
         ];
 
         foreach ($structure as $folder) {
