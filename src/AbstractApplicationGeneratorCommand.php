@@ -5,7 +5,7 @@ namespace Mcklayin\RightWay;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
-abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
+abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorCommand
 {
     /**
      * Create a new controller creator command instance.
@@ -17,7 +17,7 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     {
         parent::__construct($files);
 
-        $this->namespace = config('rightway.domain_layer_namespace').'\\';
+        $this->namespace = config('rightway.application_layer_namespace').'\\';
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     /**
      * @return string
      */
-    protected function getDomainName(): string
+    protected function getApplicationName(): string
     {
         return explode('/', $this->getNameInput())[0];
     }
@@ -70,6 +70,17 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     protected function qualifyName($name): string
     {
         return str_replace('/', '\\', $name);
+    }
+
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function getPath($name)
+    {
+        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
     }
 
     /**

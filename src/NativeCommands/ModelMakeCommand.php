@@ -29,6 +29,9 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
      */
     protected $type = 'Model';
 
+    /**
+     * @var string
+     */
     protected $path = 'Models';
 
     /**

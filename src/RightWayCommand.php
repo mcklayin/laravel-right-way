@@ -12,8 +12,6 @@ class RightWayCommand extends Command
 
     protected $composer;
 
-    protected $appRootNamespace = 'App';
-
     /**
      * The name and signature of the console command.
      *
@@ -47,17 +45,26 @@ class RightWayCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      */
     public function handle()
     {
         $this->createDomainLayer();
         $this->createApplicationLayer();
-        $this->createServiceLayer();
+        $this->createInfrastructureLayer();
 
         $this->composer->dumpAutoloads();
 
         $this->info('Done');
+    }
+
+    /**
+     * Get the root namespace for the class.
+     *
+     * @return string
+     */
+    protected function rootNamespace()
+    {
+        return $this->laravel->getNamespace();
     }
 
     /**
@@ -66,7 +73,7 @@ class RightWayCommand extends Command
     private function createDomainLayer()
     {
         $domainLayerName = 'Domain';
-        $domainNamespace = $this->appRootNamespace.'\\'.$domainLayerName;
+        $domainNamespace = $this->rootNamespace().'\\'.$domainLayerName;
         $this->call('right-way:make:domain', [
             'name'   => 'User',
             '--root' => $domainLayerName,
@@ -102,12 +109,12 @@ class RightWayCommand extends Command
     /**
      * Create Service layer.
      */
-    private function createServiceLayer()
+    private function createInfrastructureLayer()
     {
-        $serviceLayerName = 'Service';
-        $this->makeDirectory(app_path($serviceLayerName));
+        $infrastructureLayerName = 'Infrastructure';
+        $this->makeDirectory(app_path($infrastructureLayerName));
 
-        $this->info('Service layer created');
+        $this->info('Infrastructure layer created');
     }
 
     /**
@@ -172,14 +179,23 @@ class RightWayCommand extends Command
             'User' => 'User/Models',
         ];
 
+        $additionalChanges = [
+            'User' => 'updateAuthProvidersUsersModel'
+        ];
+
         foreach ($defaultsModels as $model => $modelPath) {
             $srcPath = app_path($model.'.php');
 
             if ($this->files->exists($srcPath)) {
                 $destPath = $path.'/'.$modelPath.'/'.$model.'.php';
                 $namespace = $domainNamespace.'\\'.$this->buildNamespace($modelPath);
-                $this->buildClass(app_path($model.'.php'), $this->appRootNamespace, $namespace);
+                $this->buildClass(app_path($model.'.php'), $this->rootNamespace(), $namespace);
                 $this->moveFile(app_path($model.'.php'), $destPath);
+
+                // Apply additional changes
+                if (isset($additionalChanges[$model]) && method_exists($this, $additionalChanges[$model])) {
+                    $this->{$additionalChanges[$model]}($namespace);
+                }
             }
         }
     }
@@ -217,5 +233,18 @@ class RightWayCommand extends Command
     protected function buildNamespace($path)
     {
         return str_replace('/', '\\', $path);
+    }
+
+    /**
+     * Update auth.providers.users.model in auth.php
+     *
+     * @param $model
+     */
+    protected function updateAuthProvidersUsersModel($model)
+    {
+        $replace = 'App\User::class';
+        $path = config_path('auth.php');
+        $fileData = $this->files->get($path);
+        $this->files->put($path, str_replace($replace, $model.'\User::class', $fileData));
     }
 }

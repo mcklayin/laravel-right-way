@@ -5,7 +5,7 @@ namespace Mcklayin\RightWay;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
-class DomainMakeCommand extends Command
+class ApplicationMakeCommand extends Command
 {
     protected $files;
 
@@ -14,9 +14,9 @@ class DomainMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'right-way:make:domain 
-                            {name : Domain name}
-                            {--root : Domain path}
+    protected $signature = 'right-way:make:app 
+                            {name : Application name}
+                            {--root : Applicaiton path}
                             ';
 
     /**
@@ -24,9 +24,9 @@ class DomainMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Make domain using DDD';
+    protected $description = 'Make Application using DDD';
 
-    private $rootPath = 'Domain';
+    private $rootPath = 'App';
 
     /**
      * Create a new controller creator command instance.
@@ -59,7 +59,7 @@ class DomainMakeCommand extends Command
 
         $this->createStructure($name);
 
-        $this->info("Domain {$name} created");
+        $this->info("Application {$name} created");
     }
 
     /**
@@ -71,22 +71,9 @@ class DomainMakeCommand extends Command
         $this->makeDirectory($path);
 
         $structure = [
-            'Actions',
-            'Broadcasting',
-            'Collections',
-            'DataTransferObjects',
-            'Factories',
-            'Events',
-            'Exceptions',
-            'Jobs',
-            'Listeners',
-            'Mail',
-            'Models',
-            'Notifications',
-            'Operations',
-            'Policies',
-            'QueryBuilders',
-            'Rules',
+            'Controllers',
+            'Middleware',
+            'Requests'
         ];
 
         foreach ($structure as $folder) {
