@@ -44,7 +44,6 @@ class RightWayCommand extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle()
     {
@@ -180,7 +179,7 @@ class RightWayCommand extends Command
         ];
 
         $additionalChanges = [
-            'User' => 'updateAuthProvidersUsersModel'
+            'User' => 'updateAuthProvidersUsersModel',
         ];
 
         foreach ($defaultsModels as $model => $modelPath) {
@@ -236,7 +235,7 @@ class RightWayCommand extends Command
     }
 
     /**
-     * Update auth.providers.users.model in auth.php
+     * Update auth.providers.users.model in auth.php.
      *
      * @param $model
      */

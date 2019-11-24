@@ -53,7 +53,7 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
 
         if ($this->option('api') && is_null($stub)) {
             $stub = '/stubs/controller.api.stub';
-        } elseif ($this->option('api') && ! is_null($stub) && ! $this->option('invokable')) {
+        } elseif ($this->option('api') && !is_null($stub) && !$this->option('invokable')) {
             $stub = str_replace('.stub', '.api.stub', $stub);
         }
 
@@ -62,9 +62,9 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
         return __DIR__.$stub;
     }
 
-
     /**
      * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
@@ -81,7 +81,8 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
@@ -114,7 +115,7 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
     {
         $parentModelClass = $this->parseModel($this->option('parent'));
 
-        if (! class_exists($parentModelClass)) {
+        if (!class_exists($parentModelClass)) {
             if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $parentModelClass]);
             }
@@ -122,22 +123,23 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
 
         return [
             'ParentDummyFullModelClass' => $parentModelClass,
-            'ParentDummyModelClass' => class_basename($parentModelClass),
-            'ParentDummyModelVariable' => lcfirst(class_basename($parentModelClass)),
+            'ParentDummyModelClass'     => class_basename($parentModelClass),
+            'ParentDummyModelVariable'  => lcfirst(class_basename($parentModelClass)),
         ];
     }
 
     /**
      * Build the model replacement values.
      *
-     * @param  array  $replace
+     * @param array $replace
+     *
      * @return array
      */
     protected function buildModelReplacements(array $replace)
     {
         $modelClass = $this->parseModel($this->option('model'));
 
-        if (! class_exists($modelClass)) {
+        if (!class_exists($modelClass)) {
             if ($this->confirm("A {$modelClass} model does not exist. Do you want to generate it?", true)) {
                 $this->call('make:model', ['name' => $modelClass]);
             }
@@ -145,18 +147,19 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
 
         return array_merge($replace, [
             'DummyFullModelClass' => $modelClass,
-            'DummyModelClass' => class_basename($modelClass),
-            'DummyModelVariable' => lcfirst(class_basename($modelClass)),
+            'DummyModelClass'     => class_basename($modelClass),
+            'DummyModelVariable'  => lcfirst(class_basename($modelClass)),
         ]);
     }
 
     /**
      * Get the fully-qualified model class name.
      *
-     * @param  string  $model
-     * @return string
+     * @param string $model
      *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     protected function parseModel($model)
     {
@@ -166,7 +169,7 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
 
         $model = trim(str_replace('/', '\\', $model), '\\');
 
-        if (! Str::startsWith($model, $rootNamespace = $this->rootNamespace())) {
+        if (!Str::startsWith($model, $rootNamespace = $this->rootNamespace())) {
             $model = $rootNamespace.$model;
         }
 

@@ -2,10 +2,7 @@
 
 namespace Mcklayin\RightWay\NativeCommands;
 
-
-use Illuminate\Support\Str;
 use Mcklayin\RightWay\AbstractDomainGeneratorCommand;
-use Symfony\Component\Console\Input\InputOption;
 
 class ChannelMakeCommand extends AbstractDomainGeneratorCommand
 {
@@ -38,7 +35,8 @@ class ChannelMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
