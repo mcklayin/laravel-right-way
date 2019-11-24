@@ -59,24 +59,6 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     }
 
     /**
-     * @return string
-     */
-    protected function getDomainName(): string
-    {
-        return explode('/', $this->getNameInput())[0];
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function qualifyName($name): string
-    {
-        return str_replace('/', '\\', $name);
-    }
-
-    /**
      * Parse the class name and format according to the root namespace.
      *
      * @param string $name
@@ -96,6 +78,7 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
         $name = $this->qualifyName($name);
 
         $name = Str::replaceFirst($this->getBaseName(), $this->path.'\\'.$this->getBaseName(), $name);
+
         $path = $this->qualifyClass(
             $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
         );
@@ -138,13 +121,5 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     protected function getReplacers($name): array
     {
         return [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getBaseName(): string
-    {
-        return class_basename($this->getNameInput());
     }
 }

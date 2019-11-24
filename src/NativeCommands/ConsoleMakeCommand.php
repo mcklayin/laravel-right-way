@@ -2,11 +2,11 @@
 
 namespace Mcklayin\RightWay\NativeCommands;
 
-use Illuminate\Console\GeneratorCommand;
+use Mcklayin\RightWay\AbstractApplicationGeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class ConsoleMakeCommand extends GeneratorCommand
+class ConsoleMakeCommand extends AbstractApplicationGeneratorCommand
 {
     /**
      * The console command name.
@@ -30,16 +30,9 @@ class ConsoleMakeCommand extends GeneratorCommand
     protected $type = 'Console command';
 
     /**
-     * Get the default namespace for the class.
-     *
-     * @param string $rootNamespace
-     *
-     * @return string
+     * @var string
      */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace.'\Console\Commands';
-    }
+    protected $path = 'Console\Commands';
 
     /**
      * Replace the class name for the given stub.

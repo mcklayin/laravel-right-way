@@ -30,6 +30,9 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
      */
     protected $type = 'Controller';
 
+    /**
+     * @var string
+     */
     protected $path = 'Controllers';
 
     /**
@@ -170,7 +173,8 @@ class ControllerMakeCommand extends AbstractApplicationGeneratorCommand
         $model = trim(str_replace('/', '\\', $model), '\\');
 
         if (!Str::startsWith($model, $rootNamespace = $this->rootNamespace())) {
-            $model = $rootNamespace.$model;
+            $domainLayer = config('rightway.domain_layer_namespace');
+            $model = $domainLayer.'\\'.$this->getLayerFrom($model).'\Models\\'.$this->getBaseName($model);
         }
 
         return $model;

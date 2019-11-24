@@ -77,18 +77,6 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     }
 
     /**
-     * Get the destination class path.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
-    }
-
-    /**
      * Parse the class name and format according to the root namespace.
      *
      * @param string $name
@@ -150,13 +138,5 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     protected function getReplacers($name): array
     {
         return [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getBaseName(): string
-    {
-        return class_basename($this->getNameInput());
     }
 }
