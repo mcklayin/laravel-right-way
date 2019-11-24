@@ -37,8 +37,9 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return mixed
      */
     public function handle()
     {
@@ -65,7 +66,7 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
             $this->createController();
         }
 
-        if (! $this->option('only-model')) {
+        if (!$this->option('only-model')) {
             $this->createQueryBuilder();
             $this->createCollection();
         }
@@ -150,7 +151,6 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
         ]);
     }
 
-
     /**
      * Get the stub file for the generator.
      *
@@ -192,7 +192,7 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
     }
 
     /**
-     * Resolve create query builder name
+     * Resolve create query builder name.
      *
      * @return string
      */
@@ -204,21 +204,20 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
     }
 
     /**
-     * Resolve created query builder namespace
+     * Resolve created query builder namespace.
      *
      * @return string
      */
     protected function queryBuilderNamespace(): string
     {
         $queryBuilderNamespace = $this->qualifyClass($this->getNameInput());
-        $replace = $this->beforeLast($queryBuilderNamespace,'\\'.$this->path);
+        $replace = $this->beforeLast($queryBuilderNamespace, '\\'.$this->path);
 
-        return $replace . '\QueryBuilders\\'.$this->queryBuilderName();
+        return $replace.'\QueryBuilders\\'.$this->queryBuilderName();
     }
 
-
     /**
-     * Resolve created collection name
+     * Resolve created collection name.
      *
      * @return string
      */
@@ -230,20 +229,20 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
     }
 
     /**
-     * Resolve created collection namespace
+     * Resolve created collection namespace.
      *
      * @return string
      */
     protected function collectionNamespace(): string
     {
         $collectionNamespace = $this->qualifyClass($this->getNameInput());
-        $replace = $this->beforeLast($collectionNamespace,'\\'.$this->path);
+        $replace = $this->beforeLast($collectionNamespace, '\\'.$this->path);
 
-        return $replace . '\Collections\\'.$this->collectionName();
+        return $replace.'\Collections\\'.$this->collectionName();
     }
 
     /**
-     * Get replacing placeholders
+     * Get replacing placeholders.
      *
      * @return array
      */
@@ -256,14 +255,15 @@ class ModelMakeCommand extends AbstractDomainGeneratorCommand
             'DummyQueryBuilderNamespace',
             'DummyQueryBuilder',
             'DummyCollectionNamespace',
-            'DummyCollection'
+            'DummyCollection',
             ];
     }
 
     /**
-     * Get replaced data
+     * Get replaced data.
      *
      * @param $name
+     *
      * @return array
      */
     protected function getReplacers($name): array
