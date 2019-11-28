@@ -75,7 +75,6 @@ class DomainMakeCommand extends Command
             'Broadcasting',
             'Collections',
             'DataTransferObjects',
-            'Factories',
             'Events',
             'Exceptions',
             'Jobs',
