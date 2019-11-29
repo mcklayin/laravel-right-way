@@ -5,7 +5,7 @@ namespace Mcklayin\RightWay\NativeCommands;
 use Mcklayin\RightWay\AbstractDomainGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class ExceptionMakeCommand extends  AbstractDomainGeneratorCommand
+class ExceptionMakeCommand extends AbstractDomainGeneratorCommand
 {
     /**
      * The console command name.
@@ -54,7 +54,8 @@ class ExceptionMakeCommand extends  AbstractDomainGeneratorCommand
     /**
      * Determine if the class already exists.
      *
-     * @param  string  $rawName
+     * @param string $rawName
+     *
      * @return bool
      */
     protected function alreadyExists($rawName)

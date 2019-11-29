@@ -35,7 +35,8 @@ class EventMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Determine if the class already exists.
      *
-     * @param  string  $rawName
+     * @param string $rawName
+     *
      * @return bool
      */
     protected function alreadyExists($rawName)

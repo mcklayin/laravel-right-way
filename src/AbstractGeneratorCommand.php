@@ -37,6 +37,7 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
 
     /**
      * @param string|null $input
+     *
      * @return string
      */
     protected function getLayerFrom($input = null): string
@@ -49,7 +50,8 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)
@@ -63,6 +65,7 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
 
     /**
      * @param string|null $input
+     *
      * @return string
      */
     protected function getBaseName($input = null): string
@@ -74,11 +77,12 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
 
     /**
      * @param string|null $input
+     *
      * @return string
      */
     private function gatherInput($input = null): string
     {
-       return $input ?? $this->getNameInput();
+        return $input ?? $this->getNameInput();
     }
 
     /**

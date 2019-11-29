@@ -2,7 +2,6 @@
 
 namespace Mcklayin\RightWay\NativeCommands;
 
-use Illuminate\Console\GeneratorCommand;
 use Mcklayin\RightWay\AbstractDomainGeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -42,14 +41,15 @@ class FactoryMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
     {
         $model = $this->option('model');
         $namespaceModel = $model
-                        ?  $this->rootNamespace().$this->getLayerFrom($model).'\Models\\'.$this->getBaseName($model)
+                        ? $this->rootNamespace().$this->getLayerFrom($model).'\Models\\'.$this->getBaseName($model)
                         : trim($this->rootNamespace(), '\\').'\\Model';
 
         $model = class_basename($namespaceModel);
@@ -70,7 +70,8 @@ class FactoryMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getPath($name)

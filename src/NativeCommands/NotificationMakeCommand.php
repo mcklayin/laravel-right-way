@@ -40,7 +40,7 @@ class NotificationMakeCommand extends AbstractDomainGeneratorCommand
      */
     public function handle()
     {
-        if (parent::handle() === false && ! $this->option('force')) {
+        if (parent::handle() === false && !$this->option('force')) {
             return;
         }
 
@@ -58,7 +58,7 @@ class NotificationMakeCommand extends AbstractDomainGeneratorCommand
     {
         $path = resource_path('views/'.str_replace('.', '/', $this->option('markdown'))).'.blade.php';
 
-        if (! $this->files->isDirectory(dirname($path))) {
+        if (!$this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0755, true);
         }
 
@@ -68,7 +68,8 @@ class NotificationMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
