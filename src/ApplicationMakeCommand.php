@@ -74,6 +74,7 @@ class ApplicationMakeCommand extends Command
             'Controllers',
             'Middleware',
             'Requests',
+            'Resources',
         ];
 
         foreach ($structure as $folder) {

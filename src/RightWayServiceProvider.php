@@ -15,6 +15,11 @@ use Mcklayin\RightWay\NativeCommands\MailMakeCommand;
 use Mcklayin\RightWay\NativeCommands\MiddlewareMakeCommand;
 use Mcklayin\RightWay\NativeCommands\ModelMakeCommand;
 use Mcklayin\RightWay\NativeCommands\NotificationMakeCommand;
+use Mcklayin\RightWay\NativeCommands\ObserverMakeCommand;
+use Mcklayin\RightWay\NativeCommands\PolicyMakeCommand;
+use Mcklayin\RightWay\NativeCommands\RequestMakeCommand;
+use Mcklayin\RightWay\NativeCommands\ResourceMakeCommand;
+use Mcklayin\RightWay\NativeCommands\RuleMakeCommand;
 
 class RightWayServiceProvider extends ServiceProvider
 {
@@ -101,6 +106,26 @@ class RightWayServiceProvider extends ServiceProvider
 
         $this->app->extend('command.notification.make', function () {
             return new NotificationMakeCommand(app('files'));
+        });
+
+        $this->app->extend('command.observer.make', function () {
+            return new ObserverMakeCommand(app('files'));
+        });
+
+        $this->app->extend('command.policy.make', function () {
+            return new PolicyMakeCommand(app('files'));
+        });
+
+        $this->app->extend('command.request.make', function () {
+            return new RequestMakeCommand(app('files'));
+        });
+
+        $this->app->extend('command.resource.make', function () {
+            return new ResourceMakeCommand(app('files'));
+        });
+
+        $this->app->extend('command.rule.make', function () {
+            return new RuleMakeCommand(app('files'));
         });
     }
 }

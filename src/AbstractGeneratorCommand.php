@@ -13,6 +13,8 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     protected $namespace;
 
     /**
+     * Folder path relative to namespace
+     *
      * @var string
      */
     protected $path;
@@ -36,15 +38,23 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     }
 
     /**
-     * @param string|null $input
+     * @param string $input
      *
      * @return string
      */
-    protected function getLayerFrom($input = null): string
+    protected function getLayerFrom($input): string
     {
-        $input = $this->gatherInput($input);
-
         return explode('\\', $this->qualifyName($input))[0];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLayer(): string
+    {
+        $input = $this->gatherInput();
+
+        return $this->getLayerFrom($input);
     }
 
     /**
@@ -93,5 +103,37 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     protected function qualifyName($name): string
     {
         return str_replace('/', '\\', $name);
+    }
+
+    /**
+     * Parse the class name and format according to the root namespace.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function qualifyClass($name): string
+    {
+        $name = ltrim($name, '\\/');
+
+        $rootNamespace = $this->rootNamespace();
+
+        if (Str::startsWith($name, $rootNamespace)) {
+            return $name;
+        }
+
+        $name = $this->qualifyName($name);
+
+        if (Str::contains($name, '\\')) {
+            $name = Str::replaceFirst($this->getLayer(), $this->getLayer().'\\'.$this->path, $name);
+        } else {
+            $name = $this->path.'\\'.$name;
+        }
+
+        $path = $this->qualifyClass(
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
+        );
+
+        return $path;
     }
 }

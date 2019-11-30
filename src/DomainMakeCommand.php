@@ -82,6 +82,7 @@ class DomainMakeCommand extends Command
             'Mail',
             'Models',
             'Notifications',
+            'Observers',
             'Operations',
             'Policies',
             'QueryBuilders',

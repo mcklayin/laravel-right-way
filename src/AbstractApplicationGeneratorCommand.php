@@ -77,33 +77,6 @@ abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorComm
     }
 
     /**
-     * Parse the class name and format according to the root namespace.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function qualifyClass($name): string
-    {
-        $name = ltrim($name, '\\/');
-
-        $rootNamespace = $this->rootNamespace();
-
-        if (Str::startsWith($name, $rootNamespace)) {
-            return $name;
-        }
-
-        $name = $this->qualifyName($name);
-
-        $name = Str::replaceFirst($this->getBaseName(), $this->path.'\\'.$this->getBaseName(), $name);
-        $path = $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
-        );
-
-        return $path;
-    }
-
-    /**
      * Replace the namespace for the given stub.
      *
      * @param string $stub

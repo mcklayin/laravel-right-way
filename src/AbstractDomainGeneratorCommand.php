@@ -22,6 +22,20 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     }
 
     /**
+     * @return void
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function handle()
+    {
+        if (!Str::contains($this->getNameInput(), '/')) {
+           $this->error('Domain name should be specified! Eg. User/StoreRule');
+           return;
+        }
+
+        parent::handle();
+    }
+
+    /**
      * Returns the portion of string specified by the start and length parameters.
      *
      * @param string   $string
@@ -56,34 +70,6 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
         }
 
         return $this->substr($subject, 0, $pos);
-    }
-
-    /**
-     * Parse the class name and format according to the root namespace.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function qualifyClass($name): string
-    {
-        $name = ltrim($name, '\\/');
-
-        $rootNamespace = $this->rootNamespace();
-
-        if (Str::startsWith($name, $rootNamespace)) {
-            return $name;
-        }
-
-        $name = $this->qualifyName($name);
-
-        $name = Str::replaceFirst($this->getBaseName(), $this->path.'\\'.$this->getBaseName(), $name);
-
-        $path = $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
-        );
-
-        return $path;
     }
 
     /**
