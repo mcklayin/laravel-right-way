@@ -13,7 +13,7 @@ abstract class AbstractGeneratorCommand extends GeneratorCommand
     protected $namespace;
 
     /**
-     * Folder path relative to namespace
+     * Folder path relative to namespace.
      *
      * @var string
      */

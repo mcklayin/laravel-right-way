@@ -56,7 +56,7 @@ class RightWayCommand extends AbstractCommand
 
     /**
      * Create Domain layer & first User domain.
-     * 
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function createDomainLayer()
@@ -133,6 +133,7 @@ class RightWayCommand extends AbstractCommand
     /**
      * @param $path
      * @param $domainNamespace
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function prepareDefaultDomain($path, $domainNamespace)

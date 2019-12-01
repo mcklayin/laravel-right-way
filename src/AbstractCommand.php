@@ -41,6 +41,7 @@ abstract class AbstractCommand extends Command
 
     /**
      * @param $path
+     *
      * @return string
      */
     protected function qualifyPath($path): string
@@ -64,6 +65,7 @@ abstract class AbstractCommand extends Command
 
     /**
      * @param $namespace
+     *
      * @return string
      */
     protected function replaceLaravelNamespace($namespace): string

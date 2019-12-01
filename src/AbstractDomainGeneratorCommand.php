@@ -22,14 +22,16 @@ abstract class AbstractDomainGeneratorCommand extends AbstractGeneratorCommand
     }
 
     /**
-     * @return void
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return void
      */
     public function handle()
     {
         if (!Str::contains($this->getNameInput(), '/')) {
-           $this->error('Domain name should be specified! Eg. User/StoreRule');
-           return;
+            $this->error('Domain name should be specified! Eg. User/StoreRule');
+
+            return;
         }
 
         parent::handle();
