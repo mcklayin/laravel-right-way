@@ -37,7 +37,8 @@ class ObserverMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function buildClass($name)
@@ -56,14 +57,13 @@ class ObserverMakeCommand extends AbstractDomainGeneratorCommand
      */
     protected function getNameInput()
     {
-       $name = trim($this->argument('name'));
+        $name = trim($this->argument('name'));
 
-       if (!Str::endsWith($name, 'Observer'))
-       {
-           $name .= 'Observer';
-       }
+        if (!Str::endsWith($name, 'Observer')) {
+            $name .= 'Observer';
+        }
 
-       return $name;
+        return $name;
     }
 
     /**
@@ -81,8 +81,9 @@ class ObserverMakeCommand extends AbstractDomainGeneratorCommand
     /**
      * Replace the model for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $model
+     * @param string $stub
+     * @param string $model
+     *
      * @return string
      */
     protected function replaceModel($stub, $model)
