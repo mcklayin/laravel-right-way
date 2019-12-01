@@ -2,13 +2,10 @@
 
 namespace Mcklayin\RightWay;
 
-use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
-class ApplicationMakeCommand extends Command
+class ApplicationMakeCommand extends AbstractCommand
 {
-    protected $files;
-
     /**
      * The name and signature of the console command.
      *
@@ -26,8 +23,6 @@ class ApplicationMakeCommand extends Command
      */
     protected $description = 'Make Application using DDD';
 
-    private $rootPath = 'App';
-
     /**
      * Create a new controller creator command instance.
      *
@@ -37,9 +32,8 @@ class ApplicationMakeCommand extends Command
      */
     public function __construct(Filesystem $files)
     {
-        parent::__construct();
-
-        $this->files = $files;
+        parent::__construct($files);
+        $this->namespace = config('rightway.application_layer_namespace');
     }
 
     /**
@@ -54,7 +48,7 @@ class ApplicationMakeCommand extends Command
         $root = $this->option('root');
 
         if ($root) {
-            $this->rootPath = $root;
+            $this->namespace = $root;
         }
 
         $this->createStructure($name);
@@ -80,29 +74,5 @@ class ApplicationMakeCommand extends Command
         foreach ($structure as $folder) {
             $this->makeDirectory($path.'/'.$folder);
         }
-    }
-
-    /**
-     * @param $name
-     *
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        return $this->laravel['path'].'/'.$this->rootPath.'/'.$name;
-    }
-
-    /**
-     * @param $path
-     *
-     * @return mixed
-     */
-    protected function makeDirectory($path)
-    {
-        if (!$this->files->isDirectory($path)) {
-            $this->files->makeDirectory($path, 0777, true, true);
-        }
-
-        return $path;
     }
 }

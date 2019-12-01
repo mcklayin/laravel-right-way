@@ -3,7 +3,6 @@
 namespace Mcklayin\RightWay;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 
 abstract class AbstractApplicationGeneratorCommand extends AbstractGeneratorCommand
 {

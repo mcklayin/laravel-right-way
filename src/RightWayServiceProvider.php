@@ -28,6 +28,7 @@ class RightWayServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 DomainMakeCommand::class,
+                InfrastructureMakeCommand::class,
                 DTOMakeCommand::class,
                 QueryBuilderMakeCommand::class,
                 CollectionMakeCommand::class,
@@ -50,6 +51,7 @@ class RightWayServiceProvider extends ServiceProvider
     {
         return [
             DomainMakeCommand::class,
+            InfrastructureMakeCommand::class,
             DTOMakeCommand::class,
             QueryBuilderMakeCommand::class,
             CollectionMakeCommand::class,

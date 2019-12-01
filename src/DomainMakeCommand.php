@@ -2,13 +2,10 @@
 
 namespace Mcklayin\RightWay;
 
-use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
-class DomainMakeCommand extends Command
+class DomainMakeCommand extends AbstractCommand
 {
-    protected $files;
-
     /**
      * The name and signature of the console command.
      *
@@ -26,8 +23,6 @@ class DomainMakeCommand extends Command
      */
     protected $description = 'Make domain using DDD';
 
-    private $rootPath = 'Domain';
-
     /**
      * Create a new controller creator command instance.
      *
@@ -37,9 +32,8 @@ class DomainMakeCommand extends Command
      */
     public function __construct(Filesystem $files)
     {
-        parent::__construct();
-
-        $this->files = $files;
+        parent::__construct($files);
+        $this->namespace = config('rightway.domain_layer_namespace');
     }
 
     /**
@@ -50,11 +44,10 @@ class DomainMakeCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-
         $root = $this->option('root');
 
         if ($root) {
-            $this->rootPath = $root;
+            $this->namespace = $root;
         }
 
         $this->createStructure($name);
@@ -92,29 +85,5 @@ class DomainMakeCommand extends Command
         foreach ($structure as $folder) {
             $this->makeDirectory($path.'/'.$folder);
         }
-    }
-
-    /**
-     * @param $name
-     *
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        return $this->laravel['path'].'/'.$this->rootPath.'/'.$name;
-    }
-
-    /**
-     * @param $path
-     *
-     * @return mixed
-     */
-    protected function makeDirectory($path)
-    {
-        if (!$this->files->isDirectory($path)) {
-            $this->files->makeDirectory($path, 0777, true, true);
-        }
-
-        return $path;
     }
 }

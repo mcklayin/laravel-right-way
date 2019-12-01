@@ -2,14 +2,14 @@
 
 namespace Mcklayin\RightWay;
 
-use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;
 
-class RightWayCommand extends Command
+class RightWayCommand extends AbstractCommand
 {
-    protected $files;
-
+    /**
+     * @var Composer
+     */
     protected $composer;
 
     /**
@@ -36,9 +36,7 @@ class RightWayCommand extends Command
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
-        parent::__construct();
-
-        $this->files = $files;
+        parent::__construct($files);
         $this->composer = $composer;
     }
 
@@ -57,28 +55,18 @@ class RightWayCommand extends Command
     }
 
     /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function rootNamespace()
-    {
-        return $this->laravel->getNamespace();
-    }
-
-    /**
      * Create Domain layer & first User domain.
+     * 
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function createDomainLayer()
     {
-        $domainLayerName = 'Domain';
-        $domainNamespace = $this->rootNamespace().'\\'.$domainLayerName;
+        $domainLayerNamespace = config('rightway.domain_layer_namespace');
         $this->call('right-way:make:domain', [
             'name'   => 'User',
-            '--root' => $domainLayerName,
         ]);
 
-        $this->prepareDefaultDomain(app_path($domainLayerName), $domainNamespace);
+        $this->prepareDefaultDomain($this->getPath($domainLayerNamespace), $domainLayerNamespace);
 
         $this->info('Domain layer created');
     }
@@ -88,8 +76,8 @@ class RightWayCommand extends Command
      */
     private function createApplicationLayer()
     {
-        $applicationLayerName = 'App';
-        $this->makeDirectory(app_path($applicationLayerName));
+        $applicationLayerNamespace = config('rightway.application_layer_namespace');
+        $this->makeDirectory($this->getPath($applicationLayerNamespace));
 
         // Move Framework directories to new location
         $applicationLayerFolders = [
@@ -98,7 +86,7 @@ class RightWayCommand extends Command
         ];
 
         foreach ($applicationLayerFolders as $folder) {
-            $destPath = app_path($applicationLayerName.'/'.$folder);
+            $destPath = app_path($applicationLayerNamespace.'/'.$folder);
             $this->moveDirectory(app_path($folder), $destPath);
         }
 
@@ -110,24 +98,10 @@ class RightWayCommand extends Command
      */
     private function createInfrastructureLayer()
     {
-        $infrastructureLayerName = 'Infrastructure';
-        $this->makeDirectory(app_path($infrastructureLayerName));
+        $infrastructureLayerNamespace = config('rightway.infrastructure_layer_namespace');
+        $this->makeDirectory(app_path($infrastructureLayerNamespace));
 
         $this->info('Infrastructure layer created');
-    }
-
-    /**
-     * @param $path
-     *
-     * @return mixed
-     */
-    protected function makeDirectory($path)
-    {
-        if (!$this->files->isDirectory($path)) {
-            $this->files->makeDirectory($path, 0777, true, true);
-        }
-
-        return $path;
     }
 
     /**
@@ -158,7 +132,7 @@ class RightWayCommand extends Command
 
     /**
      * @param $path
-     *
+     * @param $domainNamespace
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function prepareDefaultDomain($path, $domainNamespace)
@@ -245,5 +219,17 @@ class RightWayCommand extends Command
         $path = config_path('auth.php');
         $fileData = $this->files->get($path);
         $this->files->put($path, str_replace($replace, $model.'\User::class', $fileData));
+    }
+
+    /**
+     * @param $namespace
+     *
+     * @return string
+     */
+    protected function getPath($namespace): string
+    {
+        $namespace = $this->replaceLaravelNamespace($namespace);
+
+        return app_path($this->qualifyPath($namespace));
     }
 }
