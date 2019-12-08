@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Spatie\QueueableAction\QueueableAction;
+use Mcklayin\RightWay\Contracts\DataTransferObject;
 
 class DummyClass
 {
@@ -11,9 +12,11 @@ class DummyClass
     /**
      * Create a new action instance.
      *
+     * @param \Mcklayin\RightWay\Contracts\DataTransferObject $dataObject
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(DataTransferObject $dataObject)
     {
         // Prepare the action for execution, leveraging constructor injection.
     }

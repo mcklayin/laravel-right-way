@@ -3,8 +3,9 @@
 namespace DummyNamespace;
 
 use Spatie\DataTransferObject\DataTransferObject;
+use Mcklayin\RightWay\Contracts\DataTransferObject as DataTransferObjectInterface;
 
-class DummyClass extends DataTransferObject
+class DummyClass extends DataTransferObject implements DataTransferObjectInterface
 {
     /** @var string */
     public $someFieldName;

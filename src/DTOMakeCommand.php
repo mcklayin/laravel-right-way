@@ -2,10 +2,9 @@
 
 namespace Mcklayin\RightWay;
 
-use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class DTOMakeCommand extends GeneratorCommand
+class DTOMakeCommand extends AbstractDomainGeneratorCommand
 {
     protected $name = 'right-way:make:dto';
 

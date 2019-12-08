@@ -4,8 +4,9 @@ namespace DummyNamespace;
 
 use Illuminate\Http\Request;
 use Spatie\DataTransferObject\DataTransferObject;
+use Mcklayin\RightWay\Contracts\DataTransferObject as DataTransferObjectInterface;
 
-class DummyClass extends DataTransferObject
+class DummyClass extends DataTransferObject implements DataTransferObjectInterface
 {
      public static function fromRequest(Request $request): self
      {
