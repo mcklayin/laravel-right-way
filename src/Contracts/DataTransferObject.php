@@ -2,6 +2,6 @@
 
 namespace Mcklayin\RightWay\Contracts;
 
-interface DataTransferObject {
-
+interface DataTransferObject
+{
 }
